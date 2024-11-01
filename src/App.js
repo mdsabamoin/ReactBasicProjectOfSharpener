@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React, {useState} from "react";
+import ListItem from './ListItem';
+import Form from "./form";
 
 function App() {
+  const [address , setAddress] = useState([{title:"",url:""}]);
+  const [edit,setEdit] = useState("");
+  const [isEditing,setIsediting] = useState(false);
+  const [editIndex,setEditindex] = useState(-1);
+  const FormHandlerDetail = (details) =>{
+      setAddress((previousState)=>{
+        return [details,...previousState]
+      })
+      
+  }
+  const EditHandler = (item,index) =>{
+        // console.log(item);
+        setEdit(item);
+        setIsediting(true);
+        setEditindex(index);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div>
+      <Form onSubmit={FormHandlerDetail} edit={edit} address={address} setAddress={setAddress} isEditing={isEditing} setIsediting={setIsediting} editIndex={editIndex}/>
+     <ListItem  address={address} setAddress={setAddress} onEdit={EditHandler} />
+    </div> 
   );
 }
 
